@@ -15,3 +15,24 @@ DELETE /users/{userId}
 POST /login
 ```
 
+## 開発ルール
+`develop`のブランチを開発環境、`main`を本番環境と同じにする。
+
+開発は、次の流れに従う
+1. issueを作る。または、確認する。
+2. 担当するissueに自分を割り当てる。
+3. issueごとにブランチを切る
+4. コードが完成したら、Pull Requestを出す
+5. Pull Requestを誰かがレビュー（今回は省略）
+6. `develop`ブランチにマージする
+7. issueを閉じる
+
+--- 
+
+基本的に次の流れでコマンドを打つ
+```bash
+% git checkout -b issue/?
+% git add .
+% git commit -m "commit message"
+% git push origin HEAD
+```
