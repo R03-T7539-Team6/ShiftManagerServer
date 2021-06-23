@@ -1,6 +1,10 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/R03-T7539-Team6/ShiftManagerSerer/db"
+
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
 	r := gin.Default()
@@ -9,5 +13,7 @@ func main() {
 		c.String(200, "Hello World")
 	})
 
+	db.Init()
+	defer db.Close()
 	r.Run() // listen and serve on localhost:8080
 }
