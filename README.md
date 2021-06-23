@@ -15,6 +15,14 @@ DELETE /users/{userId}
 POST /login
 ```
 
+## ディレクトリ構成について
+- service : modelの動作を実装
+- server : ginの設定（ルーティングなど）
+- controller : アクションを定義しserviceを呼び出す
+- entity : modelのstructを分離する
+- db : データベース設定
+- vendor : Goで用いるパッケージなど
+
 ## 開発ルール
 `develop`のブランチを開発環境、`main`を本番環境と同じにする。
 
