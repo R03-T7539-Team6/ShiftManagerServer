@@ -4,7 +4,6 @@
 シフト管理ツールのAPI
 
 
-
 ## エンドポイント（仮）
 ```
 GET /users/
@@ -12,7 +11,6 @@ GET /users/{userId}
 POST /users/
 PUT /users/{userId}
 DELETE /users/{userId}
-POST /login
 ```
 
 ## ディレクトリ構成について
@@ -22,6 +20,19 @@ POST /login
 - entity : modelのstructを分離する
 - db : データベース設定
 - vendor : Goで用いるパッケージなど
+
+## 認証について
+基本的にBasic認証を用いることにする
+とりあえずは認証は後回しにするぜ！
+
+## Database
+開発環境のデータベースを動かし方
+```bash
+$ go run main.go
+
+$ qspl -h 172.29.48.1 -U gorm gorm
+gorm=####
+```
 
 ## 開発ルール
 `develop`のブランチを開発環境、`main`を本番環境と同じにする。

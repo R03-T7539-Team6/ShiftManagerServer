@@ -5,9 +5,25 @@
 
 package entity
 
+import "github.com/jinzhu/gorm"
+
+/*
+	// gorm.Modelの定義
+	type Model struct {
+  	ID        uint           `gorm:"primaryKey"`
+  	CreatedAt time.Time
+  	UpdatedAt time.Time
+  	DeletedAt gorm.DeletedAt `gorm:"index"`
+	}
+
+*/
+
 // Uset is user models property
 type User struct {
-	ID       uint   `json:"id"`
-	Name     string `json:"name"`
-	Password string `json:"password"`
+	gorm.Model
+	UserID    uint      `json:"user_id"`
+	FirstName string    `json:"firstname"`
+	LastName  string    `json:"lastname"`
+	UserState UserState `json:"user_state"`
+	UserGroup UserGroup `json:"user_group"`
 }

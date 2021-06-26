@@ -23,6 +23,10 @@ var (
 
 // Init is initialize db from main function
 func Init() {
+
+	// 現在は手元のWSL環境のPostgreにしている
+	// curlを使うため。。。
+	// [TODO]:後で直す。
 	db, err = gorm.Open(
 		"postgres",
 		"host=172.29.48.1 port=5432 user=gorm dbname=gorm password=gorm sslmode=disable",
