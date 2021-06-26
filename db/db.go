@@ -29,7 +29,7 @@ func Init() {
 	// [TODO]:後で直す。
 	db, err = gorm.Open(
 		"postgres",
-		"host=172.29.48.1 port=5432 user=gorm dbname=gorm password=gorm sslmode=disable",
+		"host=172.23.176.1 port=5432 user=gorm dbname=gorm password=gorm sslmode=disable",
 	)
 	if err != nil {
 		panic(err)
@@ -51,5 +51,16 @@ func Close() {
 
 // autoMigration is migration db
 func autoMigration() {
-	db.AutoMigrate(&entity.User{})
+	db.AutoMigrate(
+		&entity.User{},
+		&entity.UserState{},
+		&entity.UserGroup{},
+		&entity.Shift{},
+		&entity.ShiftState{},
+		&entity.ShiftRequest{},
+		&entity.ShiftSchedule{},
+		&entity.Authorization{},
+		&entity.WorkLog{},
+		&entity.Store{},
+	)
 }
