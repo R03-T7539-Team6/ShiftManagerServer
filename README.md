@@ -30,6 +30,8 @@ DELETE /users/{userId}
 ```bash
 $ go run main.go
 
+$ docker-compose up -d
+
 $ qspl -h 172.29.48.1 -U gorm gorm
 gorm=####
 ```

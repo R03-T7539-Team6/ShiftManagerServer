@@ -34,6 +34,8 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
+	// テーブル名の複数形化を無効にする
+	db.SingularTable(true)
 	autoMigration()
 }
 
