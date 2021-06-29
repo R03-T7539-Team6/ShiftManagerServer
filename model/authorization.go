@@ -2,7 +2,7 @@
 ここではモデルの定義だけ行い、
 動作に関してはserviceディレクトリで管理する。
 */
-package entity
+package model
 
 import "github.com/jinzhu/gorm"
 

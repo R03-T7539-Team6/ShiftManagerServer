@@ -1,19 +1,19 @@
-package user
+package controller
 
 import (
 	"fmt"
 
-	user "github.com/R03-T7539-Team6/ShiftManagerSerer/Service"
+	"github.com/R03-T7539-Team6/ShiftManagerSerer/model"
 	"github.com/gin-gonic/gin"
 )
 
-// Controller is User Controller
-type Controller struct{}
+// UserController is User UserController
+type UserController struct{}
 
-// Index action: GET /users
-func (pc Controller) Index(c *gin.Context) {
-	var s user.Service
-	p, err := s.GetAll()
+// Index action: GET /Users
+func (pc UserController) Index(c *gin.Context) {
+	var u model.User
+	p, err := u.GetAll()
 	if err != nil {
 		c.AbortWithStatus(404)
 		fmt.Println(err)
@@ -22,10 +22,10 @@ func (pc Controller) Index(c *gin.Context) {
 	}
 }
 
-// Create action: POST /users
-func (pc Controller) Create(c *gin.Context) {
-	var s user.Service
-	p, err := s.CreateModel(c)
+// Create action: POST /Users
+func (pc UserController) Create(c *gin.Context) {
+	var u model.User
+	p, err := u.CreateModel(c)
 
 	if err != nil {
 		c.AbortWithStatus(400)
@@ -35,11 +35,11 @@ func (pc Controller) Create(c *gin.Context) {
 	}
 }
 
-// Show action: GET /users/:id
-func (pc Controller) Show(c *gin.Context) {
+// Show action: GET /Users/:id
+func (pc UserController) Show(c *gin.Context) {
 	id := c.Params.ByName("id")
-	var s user.Service
-	p, err := s.GetByID(id)
+	var u model.User
+	p, err := u.GetByID(id)
 
 	if err != nil {
 		c.AbortWithStatus(404)
@@ -49,11 +49,11 @@ func (pc Controller) Show(c *gin.Context) {
 	}
 }
 
-// Update action: PUT /users/:id
-func (pc Controller) Update(c *gin.Context) {
+// Update action: PUT /Users/:id
+func (pc UserController) Update(c *gin.Context) {
 	id := c.Params.ByName("id")
-	var s user.Service
-	p, err := s.UpdateByID(id, c)
+	var u model.User
+	p, err := u.UpdateByID(id, c)
 	if err != nil {
 		c.AbortWithStatus(400)
 		fmt.Println(err)
@@ -62,12 +62,12 @@ func (pc Controller) Update(c *gin.Context) {
 	}
 }
 
-// Delete action: DELETE /users/:id
-func (pc Controller) Delete(c *gin.Context) {
+// Delete action: DELETE /Users/:id
+func (pc UserController) Delete(c *gin.Context) {
 	id := c.Params.ByName("id")
-	var s user.Service
+	var u model.User
 
-	if err := s.DeleteByID(id); err != nil {
+	if err := u.DeleteByID(id); err != nil {
 		c.AbortWithStatus(403)
 		fmt.Println(err)
 	} else {

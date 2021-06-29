@@ -1,7 +1,7 @@
 package server
 
 import (
-	user "github.com/R03-T7539-Team6/ShiftManagerSerer/controller"
+	"github.com/R03-T7539-Team6/ShiftManagerSerer/controller"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,7 +16,7 @@ func router() *gin.Engine {
 
 	u := r.Group("/users")
 	{
-		ctrl := user.Controller{}
+		ctrl := controller.UserController{}
 		u.GET("", ctrl.Index)
 		u.GET("/:id", ctrl.Show)
 		u.POST("", ctrl.Create)
