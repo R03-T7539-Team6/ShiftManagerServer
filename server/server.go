@@ -24,5 +24,12 @@ func router() *gin.Engine {
 		u.DELETE("/:id", ctrl.Delete)
 	}
 
+	sr := r.Group("/stores")
+	{
+		ctrl := controller.StoreController{}
+		sr.GET("/:id", ctrl.Show)
+		sr.POST("", ctrl.Create)
+	}
+
 	return r
 }
