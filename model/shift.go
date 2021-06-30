@@ -33,7 +33,7 @@ type Shift struct {
 
 type ShiftRequest struct {
 	gorm.Model
-	UserID     uint      `json:"user_id"`
+	UserID     string    `json:"user_id"`
 	LastUpdate time.Time `json:"last_upadate"`
 	Shift      []Shift   `json:"shift_request"`
 }

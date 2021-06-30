@@ -21,7 +21,7 @@ func (sc WorkLogController) Create(c *gin.Context) {
 	}
 }
 
-// Show action: POST /logs/:id
+// Show action: GET /logs/:id
 func (sc WorkLogController) Show(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var s model.WorkLog

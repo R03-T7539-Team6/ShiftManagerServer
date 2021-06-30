@@ -57,7 +57,7 @@ const (
 // Uset is user models property
 type User struct {
 	gorm.Model
-	UserID    uint   `json:"user_id"`
+	UserID    string `json:"user_id"`
 	FirstName string `json:"firstname"`
 	LastName  string `json:"lastname"`
 	UserState status `json:"user_state"`

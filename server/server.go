@@ -24,11 +24,32 @@ func router() *gin.Engine {
 		u.DELETE("/:id", ctrl.Delete)
 	}
 
+	s := r.Group("/shift")
+	{
+		ctrl := controller.ShiftController{}
+		// Shift Request
+		s.GET("/requests", ctrl.IndexRequest)
+		s.POST("/requests", ctrl.CreateRequest)
+		s.GET("/requests/:id", ctrl.ShowRequest)
+		s.DELETE("/requests/:id", ctrl.DeleteRequest)
+
+		// Shift Schedule
+		s.POST("/schedule", ctrl.ShowSchedule)
+		s.GET("schedule/:id", ctrl.ShowSchedule)
+	}
+
 	sr := r.Group("/stores")
 	{
 		ctrl := controller.StoreController{}
 		sr.GET("/:id", ctrl.Show)
 		sr.POST("", ctrl.Create)
+	}
+
+	wl := r.Group("/logs")
+	{
+		ctrl := controller.WorkLogController{}
+		wl.POST("", ctrl.Create)
+		wl.GET("/:id", ctrl.Show)
 	}
 
 	return r
