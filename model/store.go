@@ -9,8 +9,8 @@ import (
 type Store struct {
 	gorm.Model
 	StoreID       string          `json:"store_id"`
-	Worker        []User          `json:"worker_list"`
-	ShiftRequest  []ShiftRequest  `json:"shift_request"`
+	Worker        []User          `json:"worker_list" gorm:"foreignKey:UserID"`
+	ShiftRequest  []ShiftRequest  `json:"shift_request" gorm:"foreignKey:UserID"`
 	ShiftSchedule []ShiftSchedule `json:"shift_schedule"`
 }
 
@@ -28,7 +28,7 @@ func (s Store) CreateStore(c *gin.Context) (Store, error) {
 
 func (s Store) GetByID(id string) (Store, error) {
 	db := db.GetDB()
-	if err := db.Where("id = ?", id).First(&s).Error; err != nil {
+	if err := db.Where("store_id = ?", id).First(&s).Error; err != nil {
 		return s, err
 	}
 	return s, nil

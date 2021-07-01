@@ -24,9 +24,15 @@ func router() *gin.Engine {
 		u.DELETE("/:id", ctrl.Delete)
 	}
 
-	s := r.Group("/shift")
+	s := r.Group("/shifts")
 	{
 		ctrl := controller.ShiftController{}
+		// Shift
+		s.GET("", ctrl.IndexShift)
+		s.POST("", ctrl.CreateShift)
+		s.GET("/:id", ctrl.ShowShift)
+		s.DELETE("/:id", ctrl.DeleteShift)
+
 		// Shift Request
 		s.GET("/requests", ctrl.IndexRequest)
 		s.POST("/requests", ctrl.CreateRequest)

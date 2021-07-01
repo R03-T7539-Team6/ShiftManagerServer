@@ -25,17 +25,19 @@ const (
 )
 
 type Shift struct {
-	WorkDate       time.Time `json:"work_date"`
-	IsPaidHoliday  bool      `json:"is_paid_holiday"`
-	AttendanceTime time.Time `json:"attendance_time"`
-	LeavingTime    time.Time `json:"leaving_time"`
+	UserID         string      `json:"user_id"`
+	WorkDate       time.Time   `json:"work_date"`
+	IsPaidHoliday  bool        `json:"is_paid_holiday"`
+	AttendanceTime time.Time   `json:"attendance_time"`
+	LeavingTime    time.Time   `json:"leaving_time"`
+	BreakTime      []time.Time `json:"break_time"`
 }
 
 type ShiftRequest struct {
 	gorm.Model
 	UserID     string    `json:"user_id"`
 	LastUpdate time.Time `json:"last_upadate"`
-	Shift      []Shift   `json:"shift_request"`
+	Shift      []Shift   `json:"shift_request" gorm:"foreignKey:WorkDate"`
 }
 
 type ShiftSchedule struct {
@@ -44,8 +46,48 @@ type ShiftSchedule struct {
 	StartOfSchedule      time.Time   `json:"start_of_schedule"`
 	EndOfSchedule        time.Time   `json:"end_of_schedule"`
 	ShiftSchedulingState shiftStatus `json:"shift_state"`
-	Shift                []Shift     `json:"shift_schedule"`
-	Worker               []User      `json:"worker_list"`
+	Shift                []Shift     `json:"shift_schedule" gorm:"foreignKey:UserID"`
+	WorkerNum            int         `json:"worker_num"`
+}
+
+// ******************Shift
+func (sr Shift) GetAll() ([]Shift, error) {
+	db := db.GetDB()
+	var srr []Shift
+
+	if err := db.Find(&srr).Error; err != nil {
+		return nil, err
+	}
+	return srr, nil
+}
+
+func (sr Shift) CreateShift(c *gin.Context) (Shift, error) {
+	db := db.GetDB()
+	if err := c.BindJSON(&sr); err != nil {
+		return sr, err
+	}
+
+	if err := db.Create(&sr).Error; err != nil {
+		return sr, err
+	}
+	return sr, nil
+}
+
+func (sr Shift) GetByUserId(user_id string) ([]Shift, error) {
+	db := db.GetDB()
+	var srr []Shift
+	if err := db.Where("user_id = ?", user_id).Find(&srr).Error; err != nil {
+		return srr, err
+	}
+	return srr, nil
+}
+
+func (sr Shift) DeleteByID(id string) error {
+	db := db.GetDB()
+	if err := db.Where("id = ?", id).Delete(&sr).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
 // **************ShiftRequest

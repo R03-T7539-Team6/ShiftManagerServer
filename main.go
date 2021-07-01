@@ -11,6 +11,8 @@ func main() {
 		&model.User{},
 		&model.WorkLog{},
 		&model.Shift{},
+		&model.ShiftRequest{},
+		&model.ShiftSchedule{},
 		&model.Store{},
 	)
 	defer db.Close()

@@ -10,10 +10,10 @@ import (
 
 type WorkLog struct {
 	gorm.Model
-	UserID         string    `json:"user_id"`
-	AttendanceTime time.Time `json:"attendance_time"`
-	LeavingTime    time.Time `json:"leaving_time"`
-	BreakTime      time.Time `json:"break_time"`
+	UserID         string      `json:"user_id"`
+	AttendanceTime time.Time   `json:"attendance_time"`
+	LeavingTime    time.Time   `json:"leaving_time"`
+	BreakTime      []time.Time `json:"break_time"`
 }
 
 func (w WorkLog) Create(c *gin.Context) (WorkLog, error) {

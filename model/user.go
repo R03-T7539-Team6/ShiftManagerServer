@@ -62,6 +62,7 @@ type User struct {
 	LastName  string `json:"lastname"`
 	UserState status `json:"user_state"`
 	UserGroup group  `json:"user_group"`
+	StoreID   string `json:"store_id"`
 }
 
 //*************** User Method ***********************
@@ -97,7 +98,7 @@ func (s User) CreateModel(c *gin.Context) (User, error) {
 func (s User) GetByID(id string) (User, error) {
 	db := db.GetDB()
 	var u User
-	if err := db.Where("id = ?", id).First(&u).Error; err != nil {
+	if err := db.Where("user_id = ?", id).First(&u).Error; err != nil {
 		return u, err
 	}
 	return u, nil
@@ -107,7 +108,7 @@ func (s User) GetByID(id string) (User, error) {
 func (s User) UpdateByID(id string, c *gin.Context) (User, error) {
 	db := db.GetDB()
 	var u User
-	if err := db.Where("id = ?", id).First(&u).Error; err != nil {
+	if err := db.Where("user_id = ?", id).First(&u).Error; err != nil {
 		return u, err
 	}
 	if err := c.BindJSON(&u); err != nil {
