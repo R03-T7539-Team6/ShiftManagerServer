@@ -25,7 +25,7 @@ func Init(isReset bool, models ...interface{}) {
 
 	db, err = gorm.Open(
 		"postgres",
-		"host=172.23.64.1 port=5432 user=gorm dbname=gorm password=gorm sslmode=disable",
+		"host=172.28.48.1 port=5432 user=gorm dbname=gorm password=gorm sslmode=disable",
 	)
 	if err != nil {
 		panic(err)
