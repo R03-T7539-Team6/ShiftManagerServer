@@ -47,15 +47,15 @@ func router() *gin.Engine {
 	sr := r.Group("/stores")
 	{
 		ctrl := controller.StoreController{}
-		sr.GET("/:id", ctrl.Show)
-		sr.POST("", ctrl.Create)
+		sr.GET("/:id", ctrl.ShowStore)
+		sr.POST("", ctrl.CreateStore)
 	}
 
 	wl := r.Group("/logs")
 	{
 		ctrl := controller.WorkLogController{}
-		wl.POST("", ctrl.Create)
-		wl.GET("/:id", ctrl.Show)
+		wl.POST("", ctrl.CreateUserLog)
+		wl.GET("/:id", ctrl.ShowUserLogs)
 	}
 
 	return r

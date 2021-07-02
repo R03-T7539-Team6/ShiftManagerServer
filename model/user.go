@@ -58,11 +58,11 @@ const (
 type User struct {
 	gorm.Model
 	UserID    string `json:"user_id"`
+	StoreID   string `json:"store_id"`
 	FirstName string `json:"firstname"`
 	LastName  string `json:"lastname"`
 	UserState status `json:"user_state"`
 	UserGroup group  `json:"user_group"`
-	StoreID   string `json:"store_id"`
 }
 
 //*************** User Method ***********************

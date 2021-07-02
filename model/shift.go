@@ -25,8 +25,9 @@ const (
 )
 
 type Shift struct {
+	ID             uint      `json:"id" gorm:"unique"`
 	UserID         string    `json:"user_id"`
-	WorkDate       time.Time `json:"work_date"`
+	WorkDate       time.Time `json:"work_date" sql:"type:date"`
 	IsPaidHoliday  bool      `json:"is_paid_holiday"`
 	IsRequest      bool      `json:"is_request"`
 	AttendanceTime time.Time `json:"attendance_time"`
@@ -39,32 +40,32 @@ type ShiftRequest struct {
 	gorm.Model
 	UserID     string    `json:"user_id"`
 	StoreID    string    `json:"store_id"`
-	LastUpdate time.Time `json:"last_upadate"`
+	LastUpdate time.Time `json:"last_update"`
 	Shift      []Shift   `json:"shift_request" gorm:"foreignKey:WorkDate"`
 }
 
 type ShiftSchedule struct {
 	gorm.Model
 	StoreID              string      `json:"store_id"`
-	TargetDate           time.Time   `json:"target_date"`
+	TargetDate           time.Time   `json:"target_date" sql:"type:date"`
 	StartOfSchedule      time.Time   `json:"start_of_schedule"`
 	EndOfSchedule        time.Time   `json:"end_of_schedule"`
 	ShiftSchedulingState shiftStatus `json:"shift_state"`
 	Shift                []Shift     `json:"shift_schedule" gorm:"foreignKey:UserID"`
-	WorkerNum            int         `json:"worker_num"`
+	WorkerNum            uint        `json:"worker_num"`
 }
 
 // ******************Shift
 //GetAllShift is get all shift
-func (sr Shift) GetAllShift() ([]Shift, error) {
-	db := db.GetDB()
-	var srr []Shift
+// func (sr Shift) GetAllShift() ([]Shift, error) {
+// 	db := db.GetDB()
+// 	var srr []Shift
 
-	if err := db.Find(&srr).Error; err != nil {
-		return nil, err
-	}
-	return srr, nil
-}
+// 	if err := db.Find(&srr).Error; err != nil {
+// 		return nil, err
+// 	}
+// 	return srr, nil
+// }
 
 // CreateShift is create a shift
 func (sr Shift) CreateShift(c *gin.Context) (Shift, error) {

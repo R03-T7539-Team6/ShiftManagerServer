@@ -10,9 +10,9 @@ import (
 type WorkLogController struct{}
 
 // Create action: POST /logs
-func (sc WorkLogController) Create(c *gin.Context) {
+func (sc WorkLogController) CreateUserLog(c *gin.Context) {
 	var s model.WorkLog
-	p, err := s.Create(c)
+	p, err := s.CreateLog(c)
 	if err != nil {
 		c.AbortWithStatus(400)
 		fmt.Println(err)
@@ -22,7 +22,7 @@ func (sc WorkLogController) Create(c *gin.Context) {
 }
 
 // Show action: GET /logs/:id
-func (sc WorkLogController) Show(c *gin.Context) {
+func (sc WorkLogController) ShowUserLogs(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var s model.WorkLog
 	p, err := s.GetByUserID(id)

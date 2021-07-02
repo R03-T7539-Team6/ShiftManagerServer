@@ -14,6 +14,7 @@ type Store struct {
 	ShiftSchedule []ShiftSchedule `json:"shift_schedule"`
 }
 
+// CreateStore is create a store with store ID
 func (s Store) CreateStore(c *gin.Context) (Store, error) {
 	db := db.GetDB()
 
@@ -26,6 +27,7 @@ func (s Store) CreateStore(c *gin.Context) (Store, error) {
 	return s, nil
 }
 
+// GetByStoreID is get a store by store id
 func (s Store) GetByStoreID(store_id string) (Store, error) {
 	db := db.GetDB()
 	if err := db.Where("store_id = ?", store_id).First(&s).Error; err != nil {

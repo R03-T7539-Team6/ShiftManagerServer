@@ -10,7 +10,7 @@ import (
 type StoreController struct{}
 
 // Create action: POST /stores
-func (sc StoreController) Create(c *gin.Context) {
+func (sc StoreController) CreateStore(c *gin.Context) {
 	var s model.Store
 	p, err := s.CreateStore(c)
 	if err != nil {
@@ -22,10 +22,10 @@ func (sc StoreController) Create(c *gin.Context) {
 }
 
 // Show action: POST /stores/:id
-func (sc StoreController) Show(c *gin.Context) {
+func (sc StoreController) ShowStore(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var s model.Store
-	p, err := s.GetByID(id)
+	p, err := s.GetByStoreID(id)
 
 	if err != nil {
 		c.AbortWithStatus(404)

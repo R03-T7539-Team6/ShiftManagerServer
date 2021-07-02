@@ -50,7 +50,7 @@ func (sc ShiftController) ShowShift(c *gin.Context) {
 func (sc ShiftController) DeleteShift(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var sr model.Shift
-	if err := sr.DeleteByID(id); err != nil {
+	if err := sr.DeleteById(id); err != nil {
 		c.AbortWithStatus(403)
 		fmt.Println(err)
 	} else {
@@ -102,7 +102,7 @@ func (sc ShiftController) ShowRequest(c *gin.Context) {
 func (sc ShiftController) DeleteRequest(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var sr model.ShiftRequest
-	if err := sr.DeleteByID(id); err != nil {
+	if err := sr.DeleteById(id); err != nil {
 		c.AbortWithStatus(403)
 		fmt.Println(err)
 	} else {
