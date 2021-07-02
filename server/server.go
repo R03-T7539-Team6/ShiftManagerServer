@@ -30,7 +30,8 @@ func router() *gin.Engine {
 		// Shift
 		// s.GET("", ctrl.IndexShift)
 		s.POST("", ctrl.CreateShift)
-		s.GET("/:id", ctrl.ShowShift)
+		s.GET("", ctrl.ShowShift)
+		s.GET("/:id	", ctrl.ShowShiftByUser)
 		s.DELETE("/:id", ctrl.DeleteShift)
 
 		// Shift Request
@@ -40,7 +41,7 @@ func router() *gin.Engine {
 		s.DELETE("/requests/:id", ctrl.DeleteRequest)
 
 		// Shift Schedule
-		s.POST("/schedule", ctrl.ShowSchedule)
+		s.POST("/schedule", ctrl.CreateSchedule)
 		s.GET("schedule/:id", ctrl.ShowSchedule)
 	}
 
@@ -55,6 +56,7 @@ func router() *gin.Engine {
 	{
 		ctrl := controller.WorkLogController{}
 		wl.POST("", ctrl.CreateUserLog)
+		wl.PUT("/:id", ctrl.UpdateUserLogs)
 		wl.GET("/:id", ctrl.ShowUserLogs)
 	}
 

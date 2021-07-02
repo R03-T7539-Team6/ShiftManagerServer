@@ -38,20 +38,20 @@ type Shift struct {
 
 type ShiftRequest struct {
 	gorm.Model
-	UserID     string    `json:"user_id"`
+	UserID     string    `json:"user_id" gorm:"unique"`
 	StoreID    string    `json:"store_id"`
 	LastUpdate time.Time `json:"last_update"`
-	Shift      []Shift   `json:"shift_request" gorm:"foreignKey:WorkDate"`
+	Shift      []Shift   `json:"shifts" gorm:"foreignKey:WorkDate"`
 }
 
 type ShiftSchedule struct {
 	gorm.Model
-	StoreID              string      `json:"store_id"`
+	StoreID              string      `json:"store_id" gorm:"unique"`
 	TargetDate           time.Time   `json:"target_date" sql:"type:date"`
 	StartOfSchedule      time.Time   `json:"start_of_schedule"`
 	EndOfSchedule        time.Time   `json:"end_of_schedule"`
 	ShiftSchedulingState shiftStatus `json:"shift_state"`
-	Shift                []Shift     `json:"shift_schedule" gorm:"foreignKey:UserID"`
+	Shift                []Shift     `json:"shifts" gorm:"foreignKey:UserID"`
 	WorkerNum            uint        `json:"worker_num"`
 }
 
@@ -120,6 +120,16 @@ func (sr Shift) GetByWorkDateAndIsRequest(work_date time.Time, is_request bool) 
 	return srr, nil
 }
 
+// GetByIsRequest is get all work date request shift.
+func (sr Shift) GetByIsRequest(is_request bool) ([]Shift, error) {
+	db := db.GetDB()
+	var srr []Shift
+	if err := db.Where("is_request = ?", is_request).Find(&srr).Error; err != nil {
+		return srr, err
+	}
+	return srr, nil
+}
+
 // DeleteById is delete a shift by id
 func (sr Shift) DeleteById(id string) error {
 	db := db.GetDB()
@@ -159,10 +169,20 @@ func (sr ShiftRequest) CreateShiftRequest(c *gin.Context) (ShiftRequest, error) 
 // Simillar to Shift method (GetByUserIdAndIsRequest)
 func (sr ShiftRequest) GetByUserId(user_id string) (ShiftRequest, error) {
 	db := db.GetDB()
+
+	var s []Shift
 	var srr ShiftRequest
 	if err := db.Where("user_id = ?", user_id).Find(&srr).Error; err != nil {
 		return srr, err
 	}
+
+	if err := db.Where("user_id = ? AND is_request = true", user_id).Find(&s).Error; err != nil {
+		return srr, err
+	}
+
+	// Join []User in ShiftRequest
+	srr.Shift = s
+
 	return srr, nil
 }
 
@@ -193,9 +213,14 @@ func (ss ShiftSchedule) CreateShiftSchedule(c *gin.Context) (ShiftSchedule, erro
 }
 
 // GetById is get a shift schedule by id
-func (ss ShiftSchedule) GetById(id string) (ShiftSchedule, error) {
+func (ss ShiftSchedule) GetByStoreId(store_id string) (ShiftSchedule, error) {
 	db := db.GetDB()
-	if err := db.Where("id = ?", id).Find(&ss).Error; err != nil {
+	var s []Shift
+	if err := db.Where("store_id = ?", store_id).Find(&ss).Error; err != nil {
+		return ss, err
+	}
+
+	if err := db.Where("store_id = ? AND is_request = false", store_id).Find(&s).Error; err != nil {
 		return ss, err
 	}
 	return ss, nil
