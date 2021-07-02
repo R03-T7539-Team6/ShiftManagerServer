@@ -10,13 +10,15 @@ import (
 
 type WorkLog struct {
 	gorm.Model
-	UserID         string      `json:"user_id"`
-	AttendanceTime time.Time   `json:"attendance_time"`
-	LeavingTime    time.Time   `json:"leaving_time"`
-	BreakTime      []time.Time `json:"break_time"`
+	UserID         string    `json:"user_id"`
+	AttendanceTime time.Time `json:"attendance_time"`
+	LeavingTime    time.Time `json:"leaving_time"`
+	StartBreakTime time.Time `json:"start_break_time"`
+	EndBreakTime   time.Time `json:"end_break_time"`
 }
 
-func (w WorkLog) Create(c *gin.Context) (WorkLog, error) {
+// CreateLog is create a log
+func (w WorkLog) CreateLog(c *gin.Context) (WorkLog, error) {
 	db := db.GetDB()
 	if err := c.BindJSON(&w); err != nil {
 		return w, nil
@@ -28,6 +30,20 @@ func (w WorkLog) Create(c *gin.Context) (WorkLog, error) {
 	return w, nil
 }
 
+// UpdateByID is update log by id
+func (w WorkLog) UpdateByID(id string, c *gin.Context) (WorkLog, error) {
+	db := db.GetDB()
+	if err := db.Where("id = ?", id).First(&w).Error; err != nil {
+		return w, err
+	}
+	if err := c.BindJSON(&w); err != nil {
+		return w, err
+	}
+	db.Save(&w)
+	return w, nil
+}
+
+// GetByUserID is get all user log
 func (w WorkLog) GetByUserID(user_id string) ([]WorkLog, error) {
 	db := db.GetDB()
 	var ww []WorkLog

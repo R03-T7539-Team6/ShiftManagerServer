@@ -9,19 +9,19 @@ import (
 
 type ShiftController struct{}
 
-// IndexRequest action: GET /shift/requests
-func (sc ShiftController) IndexShift(c *gin.Context) {
-	var sr model.Shift
-	p, err := sr.GetAll()
-	if err != nil {
-		c.AbortWithStatus(404)
-		fmt.Println(err)
-	} else {
-		c.JSON(200, p)
-	}
-}
+// IndexRequest action: GET /shift
+// func (sc ShiftController) IndexShift(c *gin.Context) {
+// 	var sr model.Shift
+// 	p, err := sr.GetAll()
+// 	if err != nil {
+// 		c.AbortWithStatus(404)
+// 		fmt.Println(err)
+// 	} else {
+// 		c.JSON(200, p)
+// 	}
+// }
 
-// CreateRequest action: POST /shift/requests
+// CreateShift action: POST /shift
 func (sc ShiftController) CreateShift(c *gin.Context) {
 	var sr model.Shift
 	p, err := sr.CreateShift(c)
@@ -33,7 +33,7 @@ func (sc ShiftController) CreateShift(c *gin.Context) {
 	}
 }
 
-// ShowRequest action: GET /shift/requests/:id
+// ShowShift action: GET /shift/:id
 func (sc ShiftController) ShowShift(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var sr model.Shift
@@ -46,7 +46,7 @@ func (sc ShiftController) ShowShift(c *gin.Context) {
 	}
 }
 
-// DeleteRequest action: DELETE /shift/requests/:id
+// DeleteShift action: DELETE /shift/:id
 func (sc ShiftController) DeleteShift(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var sr model.Shift
@@ -62,16 +62,16 @@ func (sc ShiftController) DeleteShift(c *gin.Context) {
 
 // *******************ShiftRequest
 // IndexRequest action: GET /shift/requests
-func (sc ShiftController) IndexRequest(c *gin.Context) {
-	var sr model.ShiftRequest
-	p, err := sr.GetAll()
-	if err != nil {
-		c.AbortWithStatus(404)
-		fmt.Println(err)
-	} else {
-		c.JSON(200, p)
-	}
-}
+// func (sc ShiftController) IndexRequest(c *gin.Context) {
+// 	var sr model.ShiftRequest
+// 	p, err := sr.GetAll()
+// 	if err != nil {
+// 		c.AbortWithStatus(404)
+// 		fmt.Println(err)
+// 	} else {
+// 		c.JSON(200, p)
+// 	}
+// }
 
 // CreateRequest action: POST /shift/requests
 func (sc ShiftController) CreateRequest(c *gin.Context) {

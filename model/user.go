@@ -124,7 +124,7 @@ func (s User) DeleteByID(id string) error {
 	db := db.GetDB()
 	var u User
 
-	if err := db.Where("id = ?", id).Delete(&u).Error; err != nil {
+	if err := db.Where("user_id = ?", id).Delete(&u).Error; err != nil {
 		return err
 	}
 	return nil

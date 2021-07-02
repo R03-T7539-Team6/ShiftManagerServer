@@ -26,9 +26,9 @@ func (s Store) CreateStore(c *gin.Context) (Store, error) {
 	return s, nil
 }
 
-func (s Store) GetByID(id string) (Store, error) {
+func (s Store) GetByStoreID(store_id string) (Store, error) {
 	db := db.GetDB()
-	if err := db.Where("store_id = ?", id).First(&s).Error; err != nil {
+	if err := db.Where("store_id = ?", store_id).First(&s).Error; err != nil {
 		return s, err
 	}
 	return s, nil

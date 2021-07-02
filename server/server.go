@@ -28,13 +28,13 @@ func router() *gin.Engine {
 	{
 		ctrl := controller.ShiftController{}
 		// Shift
-		s.GET("", ctrl.IndexShift)
+		// s.GET("", ctrl.IndexShift)
 		s.POST("", ctrl.CreateShift)
 		s.GET("/:id", ctrl.ShowShift)
 		s.DELETE("/:id", ctrl.DeleteShift)
 
 		// Shift Request
-		s.GET("/requests", ctrl.IndexRequest)
+		// s.GET("/requests", ctrl.IndexRequest)
 		s.POST("/requests", ctrl.CreateRequest)
 		s.GET("/requests/:id", ctrl.ShowRequest)
 		s.DELETE("/requests/:id", ctrl.DeleteRequest)
