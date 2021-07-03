@@ -12,3 +12,7 @@ type Authorization struct {
 type LoginResponse struct {
 	Token string `json:"token"`
 }
+
+type AuthorizationHeader struct {
+	Authorization string `header:"Authorization"`
+}

@@ -14,19 +14,21 @@ func Init() {
 func router() *gin.Engine {
 	r := gin.Default()
 
-	l := r.Group("/login")
+	l := r.Group("/")
 	{
 		ctrl := controller.AuthorizationController{}
-		l.POST("", ctrl.Login)
+		l.POST("/login", ctrl.Login)
+		l.POST("/signin", ctrl.Signup)
 	}
+
 	u := r.Group("/users")
 	{
 		ctrl := controller.UserController{}
-		u.GET("", ctrl.Index)
-		u.GET("/:id", ctrl.Show)
+		// u.GET("", ctrl.Index)
+		u.GET("", ctrl.Show)
 		u.POST("", ctrl.Create)
-		u.PUT("/:id", ctrl.Update)
-		u.DELETE("/:id", ctrl.Delete)
+		u.PUT("", ctrl.Update)
+		u.DELETE("", ctrl.Delete)
 	}
 
 	s := r.Group("/shifts")
@@ -35,19 +37,19 @@ func router() *gin.Engine {
 		// Shift
 		// s.GET("", ctrl.IndexShift)
 		s.POST("", ctrl.CreateShift)
-		s.GET("", ctrl.ShowShift)
-		s.GET("/:id	", ctrl.ShowShiftByUser)
+		// s.GET("", ctrl.ShowShift)
+		s.GET("", ctrl.ShowShiftByUser)
 		s.DELETE("/:id", ctrl.DeleteShift)
 
 		// Shift Request
 		// s.GET("/requests", ctrl.IndexRequest)
 		s.POST("/requests", ctrl.CreateRequest)
-		s.GET("/requests/:id", ctrl.ShowRequest)
+		s.GET("/requests", ctrl.ShowRequest)
 		s.DELETE("/requests/:id", ctrl.DeleteRequest)
 
 		// Shift Schedule
 		s.POST("/schedule", ctrl.CreateSchedule)
-		s.GET("schedule/:id", ctrl.ShowSchedule)
+		s.GET("/schedule/:id", ctrl.ShowSchedule)
 	}
 
 	sr := r.Group("/stores")
@@ -62,7 +64,7 @@ func router() *gin.Engine {
 		ctrl := controller.WorkLogController{}
 		wl.POST("", ctrl.CreateUserLog)
 		wl.PUT("/:id", ctrl.UpdateUserLogs)
-		wl.GET("/:id", ctrl.ShowUserLogs)
+		wl.GET("", ctrl.ShowUserLogs)
 	}
 
 	return r

@@ -69,15 +69,15 @@ type User struct {
 
 //*************** User Method ***********************
 // GetAll is get all User
-func (s User) GetAll() ([]User, error) {
-	db := db.GetDB()
-	var u []User
+// func (s User) GetAll() ([]User, error) {
+// 	db := db.GetDB()
+// 	var u []User
 
-	if err := db.Find(&u).Error; err != nil {
-		return nil, err
-	}
-	return u, nil
-}
+// 	if err := db.Find(&u).Error; err != nil {
+// 		return nil, err
+// 	}
+// 	return u, nil
+// }
 
 // CreateModel is create User model
 func (s User) CreateModel(c *gin.Context) (User, error) {

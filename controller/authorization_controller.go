@@ -16,6 +16,19 @@ import (
 
 type AuthorizationController struct{}
 
+// Create action: POST /Users
+func (pc AuthorizationController) Signup(c *gin.Context) {
+	var u model.User
+	p, err := u.CreateModel(c)
+
+	if err != nil {
+		c.AbortWithStatus(400)
+		fmt.Println(err)
+	} else {
+		c.JSON(200, p)
+	}
+}
+
 func (ac AuthorizationController) Login(c *gin.Context) {
 	var a model.Authorization
 	var u model.User
