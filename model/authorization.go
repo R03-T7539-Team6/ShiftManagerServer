@@ -4,10 +4,11 @@
 */
 package model
 
-import "github.com/jinzhu/gorm"
-
 type Authorization struct {
-	gorm.Model
-	UserID   uint   `json:"user_id"`
+	UserID   string `json:"user_id"`
 	Password string `json:"password"`
+}
+
+type LoginResponse struct {
+	Token string `json:"token"`
 }

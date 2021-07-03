@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/R03-T7539-Team6/ShiftManagerSerer/db"
+	"github.com/R03-T7539-Team6/ShiftManagerSerer/utility"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )
@@ -58,6 +59,7 @@ const (
 type User struct {
 	gorm.Model
 	UserID    string `json:"user_id" gorm:"unique"`
+	Password  string `json:"password"`
 	StoreID   string `json:"store_id"`
 	FirstName string `json:"firstname"`
 	LastName  string `json:"lastname"`
@@ -85,7 +87,9 @@ func (s User) CreateModel(c *gin.Context) (User, error) {
 	if err := c.BindJSON(&u); err != nil {
 		return u, err
 	}
-	// ここにUserState, UserGroupの検証を入れる
+
+	// パスワードはハッシュ化して保存する
+	u.Password = utility.HashStr(u.Password, "sha256")
 
 	if err := db.Create(&u).Error; err != nil {
 		return u, err
@@ -114,6 +118,7 @@ func (s User) UpdateByID(id string, c *gin.Context) (User, error) {
 	if err := c.BindJSON(&u); err != nil {
 		return u, err
 	}
+	u.Password = utility.HashStr(u.Password, "sha256")
 	db.Save(&u)
 
 	return u, nil

@@ -14,6 +14,11 @@ func Init() {
 func router() *gin.Engine {
 	r := gin.Default()
 
+	l := r.Group("/login")
+	{
+		ctrl := controller.AuthorizationController{}
+		l.POST("", ctrl.Login)
+	}
 	u := r.Group("/users")
 	{
 		ctrl := controller.UserController{}
