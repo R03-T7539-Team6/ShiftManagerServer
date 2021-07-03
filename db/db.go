@@ -30,11 +30,11 @@ func Init(isReset bool, models ...interface{}) {
 	db_port := os.Getenv("DB_PORT")
 	db_user := os.Getenv("DB_USER")
 	db_pass := os.Getenv("DB_PASS")
-	db_timezone := os.Getenv("DB_TIMEZONE")
-	db_sslmode := os.Getenv("DB_SSLMODE")
+	// db_timezone := os.Getenv("DB_TIMEZONE")
+	// db_sslmode := os.Getenv("DB_SSLMODE")
 
-	url := fmt.Sprintf("host=%s port=%s	dbname=%s user=%s password=%s TimeZone=%s sslmode=%s",
-		db_host, db_port, db_name, db_user, db_pass, db_timezone, db_sslmode)
+	url := fmt.Sprintf("host=%s port=%s	dbname=%s user=%s password=%s",
+		db_host, db_port, db_name, db_user, db_pass)
 
 	db, err = gorm.Open("postgres", url)
 	if err != nil {
