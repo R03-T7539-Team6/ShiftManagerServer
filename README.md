@@ -3,21 +3,14 @@
 
 シフト管理ツールのAPI
 
-
-## エンドポイント（仮）
-```
-GET /users/
-GET /users/{userId}
-POST /users/
-PUT /users/{userId}
-DELETE /users/{userId}
-```
+APIのドキュメントは`HackMD`に書いたのでの参照してください（未完成）</br>
+[ShiftManager API ドキュメント](https://hackmd.io/@R1zb_r8nS2SNRHkRjV6SoA/SJ0ZtA23O)
 
 ## ディレクトリ構成について
 - service : modelの動作を実装
 - server : ginの設定（ルーティングなど）
 - controller : アクションを定義しserviceを呼び出す
-- entity : modelのstructを分離する
+- entity : modelのstructを分離す）
 - db : データベース設定
 - vendor : Goで用いるパッケージなど
 

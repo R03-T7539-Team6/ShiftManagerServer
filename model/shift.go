@@ -27,6 +27,7 @@ const (
 type Shift struct {
 	ID             uint      `json:"id" gorm:"unique"`
 	UserID         string    `json:"user_id"`
+	StoreID        string    `json:"store_id"`
 	WorkDate       time.Time `json:"work_date" sql:"type:date"`
 	IsPaidHoliday  bool      `json:"is_paid_holiday"`
 	IsRequest      bool      `json:"is_request"`
@@ -46,7 +47,7 @@ type ShiftRequest struct {
 
 type ShiftSchedule struct {
 	gorm.Model
-	StoreID              string      `json:"store_id" gorm:"unique"`
+	StoreID              string      `json:"store_id"`
 	TargetDate           time.Time   `json:"target_date" sql:"type:date"`
 	StartOfSchedule      time.Time   `json:"start_of_schedule"`
 	EndOfSchedule        time.Time   `json:"end_of_schedule"`

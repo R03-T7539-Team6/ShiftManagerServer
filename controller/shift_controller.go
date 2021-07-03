@@ -46,8 +46,8 @@ func (sc ShiftController) ShowShiftByUser(c *gin.Context) {
 	var err error
 	var p []model.Shift
 	if is_request != "" {
-		is_request, _ := strconv.ParseBool(is_request)
-		p, err = sr.GetByUserIdAndIsRequest(id, is_request)
+		is_request_parse, _ := strconv.ParseBool(is_request)
+		p, err = sr.GetByUserIdAndIsRequest(id, is_request_parse)
 	} else {
 		p, err = sr.GetByUserId(id)
 	}

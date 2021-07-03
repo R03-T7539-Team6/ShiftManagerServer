@@ -1,11 +1,3 @@
-/*
-ここではデータベースの基本設定のみ行う
-
-autoMigrationについて
-entityを追加するたびに、autoMigrationに追記すると
-テーブルの作成を自動で行うことができる。
-*/
-
 package db
 
 import (
