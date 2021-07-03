@@ -1,6 +1,8 @@
 package server
 
 import (
+	"net/http"
+
 	"github.com/R03-T7539-Team6/ShiftManagerSerer/controller"
 	"github.com/gin-gonic/gin"
 )
@@ -17,10 +19,14 @@ func router() *gin.Engine {
 	l := r.Group("/")
 	{
 		ctrl := controller.AuthorizationController{}
+		l.GET("", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{
+				"message": "Hello ShiftManager",
+			})
+		})
 		l.POST("/login", ctrl.Login)
 		l.POST("/signin", ctrl.Signup)
 	}
-
 	u := r.Group("/users")
 	{
 		ctrl := controller.UserController{}
