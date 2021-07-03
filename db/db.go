@@ -1,7 +1,6 @@
 package db
 
 import (
-	"log"
 	"os"
 
 	"github.com/jinzhu/gorm"
@@ -18,10 +17,10 @@ var (
 // Init is initialize db from main function
 func Init(isReset bool, models ...interface{}) {
 	// err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
-		os.Exit(1)
-	}
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// 	os.Exit(1)
+	// }
 
 	databaseUrl := os.Getenv("DATABASE_URL")
 	// db_name := os.Getenv("DB_NAME")
