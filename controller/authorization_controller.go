@@ -11,7 +11,6 @@ import (
 	"github.com/R03-T7539-Team6/ShiftManagerSerer/utility"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 type AuthorizationController struct{}
@@ -67,11 +66,11 @@ func (ac AuthorizationController) Login(c *gin.Context) {
 }
 
 func CreateToken(user_id string) (string, error) {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
-		os.Exit(1)
-	}
+	// err := godotenv.Load(".env")
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// 	os.Exit(1)
+	// }
 	secretkey := os.Getenv("ACCESS_SECRET")
 	// create token
 	token := jwt.New(jwt.GetSigningMethod("HS256"))
@@ -93,11 +92,11 @@ func CreateToken(user_id string) (string, error) {
 }
 
 func Verifytoken(tokenString string) (*jwt.Token, error) {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
-		os.Exit(1)
-	}
+	// err := godotenv.Load(".env")
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// 	os.Exit(1)
+	// }
 	secretkey := os.Getenv("ACCESS_SECRET")
 	//jwtの検証
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {

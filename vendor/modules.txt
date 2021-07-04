@@ -33,8 +33,6 @@ github.com/joho/godotenv
 # github.com/json-iterator/go v1.1.11
 ## explicit
 github.com/json-iterator/go
-# github.com/kr/pretty v0.2.1
-## explicit
 # github.com/leodido/go-urn v1.2.1
 ## explicit
 github.com/leodido/go-urn
