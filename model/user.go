@@ -70,7 +70,7 @@ type User struct {
 // UsetResponse is user models for response without password
 type UserResponse struct {
 	gorm.Model
-	UserID    string `json:"user_id" gorm:"unique"`
+	UserID    string `json:"user_id"`
 	StoreID   string `json:"store_id"`
 	FirstName string `json:"firstname"`
 	LastName  string `json:"lastname"`
@@ -91,41 +91,35 @@ type UserResponse struct {
 // }
 
 // CreateModel is create User model
-func (s User) CreateModel(c *gin.Context) (UserResponse, error) {
+func (s User) CreateModel(c *gin.Context) (User, error) {
 	db := db.GetDB()
 	var u User
-	var ur UserResponse
-
-	if err := c.BindJSON(&ur); err != nil {
-		return ur, err
-	}
 
 	if err := c.BindJSON(&u); err != nil {
-		return ur, err
+		return u, err
 	}
 
 	// パスワードはハッシュ化して保存する
 	u.Password = utility.HashStr(u.Password, "sha256")
 
 	if err := db.Create(&u).Error; err != nil {
-		return ur, err
+		return u, err
 	}
 
-	return ur, nil
+	return u, nil
 }
 
 // GetByID is get a User
-func (s User) GetByID(id string) (UserResponse, error) {
+func (s User) GetByID(id string) (User, error) {
 	db := db.GetDB()
-	// var u User
-	var ur UserResponse
-	// if err := db.Where("user_id = ?", id).First(&u).Error; err != nil {
+	var u User
+	if err := db.Where("user_id = ?", id).First(&u).Error; err != nil {
+		return u, err
+	}
+	// if err := db.Where("user_id = ?", id).First(&ur).Error; err != nil {
 	// 	return ur, err
 	// }
-	if err := db.Where("user_id = ?", id).First(&ur).Error; err != nil {
-		return ur, err
-	}
-	return ur, nil
+	return u, nil
 }
 
 // GetByID is get a User
@@ -139,21 +133,20 @@ func (s User) GetByIDWithPassword(id string) (User, error) {
 }
 
 // UpdateByID is update a User
-func (s User) UpdateByID(id string, c *gin.Context) (UserResponse, error) {
+func (s User) UpdateByID(id string, c *gin.Context) (User, error) {
 	db := db.GetDB()
 	var u User
-	var ur UserResponse
 
-	if err := db.Where("user_id = ?", id).First(&ur).Error; err != nil {
-		return ur, err
-	}
+	// if err := db.Where("user_id = ?", id).First(&ur).Error; err != nil {
+	// 	return ur, err
+	// }
 
 	if err := db.Where("user_id = ?", id).First(&u).Error; err != nil {
-		return ur, err
+		return u, err
 	}
 
-	if err := c.BindJSON(&ur); err != nil {
-		return ur, err
+	if err := c.BindJSON(&u); err != nil {
+		return u, err
 	}
 
 	// パスワードの更新なのかを確かめる
@@ -165,7 +158,7 @@ func (s User) UpdateByID(id string, c *gin.Context) (UserResponse, error) {
 
 	db.Save(&u)
 
-	return ur, nil
+	return u, nil
 }
 
 // DeleteByID is delete a User
