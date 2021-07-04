@@ -42,7 +42,7 @@ func (ac AuthorizationController) Login(c *gin.Context) {
 	user_id_auth := a.UserID
 	user_password_auth := utility.HashStr(a.Password, "sha256")
 
-	user_in_database, err := u.GetByID(user_id_auth)
+	user_in_database, err := u.GetByIDWithPassword(user_id_auth)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, "Wrong User ID")
 		fmt.Println(err)

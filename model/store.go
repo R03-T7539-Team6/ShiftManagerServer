@@ -9,7 +9,7 @@ import (
 type Store struct {
 	gorm.Model
 	StoreID       string          `json:"store_id" gorm:"unique"`
-	Worker        []User          `json:"worker_lists" gorm:"foreignKey:UserID"`
+	Worker        []UserResponse  `json:"worker_lists" gorm:"foreignKey:UserID"`
 	ShiftRequest  []ShiftRequest  `json:"shift_requests" gorm:"foreignKey:UserID"`
 	ShiftSchedule []ShiftSchedule `json:"shift_schedules"`
 }
@@ -30,7 +30,7 @@ func (s Store) CreateStore(c *gin.Context) (Store, error) {
 // GetByStoreID is get a store by store id
 func (s Store) GetByStoreID(store_id string) (Store, error) {
 	db := db.GetDB()
-	var u []User
+	var ur []UserResponse
 	var sr []ShiftRequest
 	var ss []ShiftSchedule
 
@@ -40,7 +40,7 @@ func (s Store) GetByStoreID(store_id string) (Store, error) {
 	}
 
 	// Get users in store
-	if err := db.Where("store_id = ?", store_id).Find(&u).Error; err != nil {
+	if err := db.Where("store_id = ?", store_id).Find(&ur).Error; err != nil {
 		return s, err
 	}
 
@@ -55,7 +55,7 @@ func (s Store) GetByStoreID(store_id string) (Store, error) {
 	}
 
 	// Give users shift request and schedule to store sturct
-	s.Worker = u
+	s.Worker = ur
 	s.ShiftRequest = sr
 	s.ShiftSchedule = ss
 
