@@ -52,6 +52,7 @@ func (pc UserController) Create(c *gin.Context) {
 		c.AbortWithStatus(400)
 		fmt.Println(err)
 	} else {
+		p.Password = ""
 		c.JSON(200, p)
 	}
 }
@@ -116,6 +117,7 @@ func (pc UserController) Update(c *gin.Context) {
 		c.AbortWithStatus(400)
 		fmt.Println(err)
 	} else {
+		p.Password = ""
 		c.JSON(200, p)
 	}
 }
