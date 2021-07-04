@@ -70,6 +70,9 @@ func (sc StoreController) ShowStore(c *gin.Context) {
 		c.AbortWithStatus(404)
 		fmt.Println(err)
 	} else {
+		for i := 0; i < len(p.Worker); i++ {
+			p.Worker[i].Password = ""
+		}
 		c.JSON(200, p)
 	}
 }
