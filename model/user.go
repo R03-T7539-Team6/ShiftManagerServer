@@ -67,17 +67,6 @@ type User struct {
 	UserGroup group  `json:"user_group"`
 }
 
-// UsetResponse is user models for response without password
-type UserResponse struct {
-	gorm.Model
-	UserID    string `json:"user_id"`
-	StoreID   string `json:"store_id"`
-	FirstName string `json:"firstname"`
-	LastName  string `json:"lastname"`
-	UserState status `json:"user_state"`
-	UserGroup group  `json:"user_group"`
-}
-
 //*************** User Method ***********************
 // GetAll is get all User
 // func (s User) GetAll() ([]User, error) {

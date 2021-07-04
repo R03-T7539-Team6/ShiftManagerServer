@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/R03-T7539-Team6/ShiftManagerSerer/model"
+	"github.com/R03-T7539-Team6/ShiftManagerSerer/utility"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
@@ -80,12 +81,13 @@ func (pc UserController) Show(c *gin.Context) {
 	// id := c.Params.ByName("id")
 	var u model.User
 	p, err := u.GetByID(user_id)
-
 	if err != nil {
 		c.AbortWithStatus(404)
 		fmt.Println(err)
 	} else {
-		c.JSON(200, p)
+		res := utility.StructToJsonTagMap(p)
+		delete(res, "password")
+		c.JSON(200, res)
 	}
 }
 
