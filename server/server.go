@@ -25,7 +25,7 @@ func router() *gin.Engine {
 			})
 		})
 		l.POST("/login", ctrl.Login)
-		l.POST("/signin", ctrl.Signup)
+		l.POST("/signup", ctrl.Signup)
 	}
 	u := r.Group("/users")
 	{
