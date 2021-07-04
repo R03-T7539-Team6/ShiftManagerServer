@@ -1,6 +1,7 @@
 package db
 
 import (
+	"log"
 	"os"
 
 	"github.com/jinzhu/gorm"
@@ -36,7 +37,7 @@ func Init(isReset bool, models ...interface{}) {
 
 	db, err = gorm.Open("postgres", databaseUrl)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	// テーブル名の複数形化を無効にする
