@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/R03-T7539-Team6/ShiftManagerSerer/model"
-	"github.com/R03-T7539-Team6/ShiftManagerSerer/utility"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
@@ -85,9 +84,8 @@ func (pc UserController) Show(c *gin.Context) {
 		c.AbortWithStatus(404)
 		fmt.Println(err)
 	} else {
-		res := utility.StructToJsonTagMap(p)
-		delete(res, "password")
-		c.JSON(200, res)
+		p.Password = ""
+		c.JSON(200, p)
 	}
 }
 
