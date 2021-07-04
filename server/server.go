@@ -45,6 +45,7 @@ func router() *gin.Engine {
 		s.POST("", ctrl.CreateShift)
 		// s.GET("", ctrl.ShowShift)
 		s.GET("", ctrl.ShowShiftByUser)
+		s.PUT("/:id", ctrl.UpdateShift)
 		s.DELETE("/:id", ctrl.DeleteShift)
 
 		// Shift Request

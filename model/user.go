@@ -118,7 +118,14 @@ func (s User) UpdateByID(id string, c *gin.Context) (User, error) {
 	if err := c.BindJSON(&u); err != nil {
 		return u, err
 	}
-	u.Password = utility.HashStr(u.Password, "sha256")
+
+	// パスワードの更新なのかを確かめる
+	var has_password map[string]interface{}
+	c.BindJSON(&has_password)
+	if _, ok := has_password["password"]; ok {
+		u.Password = utility.HashStr(u.Password, "sha256")
+	}
+
 	db.Save(&u)
 
 	return u, nil

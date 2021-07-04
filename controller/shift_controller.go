@@ -95,6 +95,38 @@ func (sc ShiftController) ShowShiftByUser(c *gin.Context) {
 	}
 }
 
+// Update action: POST /shift/:id
+func (sc ShiftController) UpdateShift(c *gin.Context) {
+	// headerを取得
+	h := model.AuthorizationHeader{}
+	if err := c.ShouldBindHeader(&h); err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, err)
+		return
+	}
+	tokenString := h.Authorization
+	tokenString = strings.TrimPrefix(tokenString, "Bearer ")
+
+	// tokenの認証
+	_, err := Verifytoken(tokenString)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, err)
+		return
+	}
+	// ペイロード読み出し
+	// claims := token.Claims.(jwt.MapClaims)
+	// user_id := fmt.Sprintf("%s", claims["user"])
+
+	id := c.Params.ByName("id")
+	var sr model.Shift
+	p, err := sr.UpdateShift(id, c)
+	if err != nil {
+		c.AbortWithStatus(400)
+		fmt.Println(err)
+	} else {
+		c.JSON(200, p)
+	}
+}
+
 // ShowShift action: GET /shift
 // 									 GET /shift?is_reuqest=true&work_date=2021-01-02
 // func (sc ShiftController) ShowShift(c *gin.Context) {

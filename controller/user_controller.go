@@ -48,7 +48,6 @@ func (pc UserController) Create(c *gin.Context) {
 
 	var u model.User
 	p, err := u.CreateModel(c)
-
 	if err != nil {
 		c.AbortWithStatus(400)
 		fmt.Println(err)

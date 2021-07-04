@@ -131,6 +131,18 @@ func (sr Shift) GetByIsRequest(is_request bool) ([]Shift, error) {
 	return srr, nil
 }
 
+// UpdateShift is create a shift
+func (sr Shift) UpdateShift(id string, c *gin.Context) (Shift, error) {
+	db := db.GetDB()
+	if err := db.Where("id = ?", id).First(&sr).Error; err != nil {
+		return sr, err
+	}
+	if err := c.BindJSON(&sr); err != nil {
+		return sr, err
+	}
+	return sr, nil
+}
+
 // DeleteById is delete a shift by id
 func (sr Shift) DeleteById(id string) error {
 	db := db.GetDB()
