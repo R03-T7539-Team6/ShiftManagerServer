@@ -24,6 +24,7 @@ func (pc AuthorizationController) Signup(c *gin.Context) {
 		c.AbortWithStatus(400)
 		fmt.Println(err)
 	} else {
+		p.Password = ""
 		c.JSON(200, p)
 	}
 }
