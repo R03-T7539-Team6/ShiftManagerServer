@@ -17,7 +17,19 @@ type WorkLog struct {
 	EndBreakTime   time.Time `json:"end_break_time"`
 }
 
-// CreateLog is create a log
+/*************************************************
+ *	specification;
+ *	name 			= CreateLog
+ *	Function 	= Create row WorkLog table
+ *	note			= worklog table is related json
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= c: *gin.Context http request
+ *  output    = WorkLog: Worklog struct
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (w WorkLog) CreateLog(c *gin.Context) (WorkLog, error) {
 	db := db.GetDB()
 	if err := c.BindJSON(&w); err != nil {
@@ -30,7 +42,20 @@ func (w WorkLog) CreateLog(c *gin.Context) (WorkLog, error) {
 	return w, nil
 }
 
-// UpdateByID is update log by id
+/*************************************************
+ *	specification;
+ *	name 			= UpdateByID
+ *	Function 	= Update selected row by id
+ *	note			= worklog table is related json
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= c: *gin.Context http request
+ * 						= id: Worklog id
+ *  output    = WorkLog: Worklog struct
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (w WorkLog) UpdateByID(id string, c *gin.Context) (WorkLog, error) {
 	db := db.GetDB()
 	if err := db.Where("id = ?", id).First(&w).Error; err != nil {
@@ -43,7 +68,20 @@ func (w WorkLog) UpdateByID(id string, c *gin.Context) (WorkLog, error) {
 	return w, nil
 }
 
-// GetByUserID is get all user log
+/*************************************************
+ *	specification;
+ *	name 			= GetByUserID
+ *	Function 	= Get all User log
+ *	note			= worklog table is related json
+							= id is user_id,  search table by user id
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= user_id: string
+ *  output    = []WorkLog: Worklog struct array
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (w WorkLog) GetByUserID(user_id string) ([]WorkLog, error) {
 	db := db.GetDB()
 	var ww []WorkLog

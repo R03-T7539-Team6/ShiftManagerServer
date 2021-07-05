@@ -11,7 +11,20 @@ import (
 
 type StoreController struct{}
 
-// Create action: POST /stores
+/*************************************************
+ *	specification;
+ *	name 			= CreateStore
+ *	Function 	= Create a Store file
+ *	note			= Store is Unique
+ *						= POST /stores
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10/V1.20
+ *  input 		= gin.Context
+ *  output    = JSON with Status code
+ * 						= model.Store JSON
+ *  end of specification;
+**************************************************/
 func (sc StoreController) CreateStore(c *gin.Context) {
 	// headerを取得
 	h := model.AuthorizationHeader{}
@@ -28,9 +41,6 @@ func (sc StoreController) CreateStore(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, err)
 		return
 	}
-	// ペイロード読み出し
-	// claims := token.Claims.(jwt.MapClaims)
-	// user_id := fmt.Sprintf("%s", claims["user"])
 
 	var s model.Store
 	p, err := s.CreateStore(c)
@@ -42,7 +52,20 @@ func (sc StoreController) CreateStore(c *gin.Context) {
 	}
 }
 
-// Show action: POST /stores/:id
+/*************************************************
+ *	specification;
+ *	name 			= ShowStore
+ *	Function 	= Get a Store file
+ *	note			= id is store_id, and remove user password
+ *						= POST /stores/:id
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10/V1.20
+ *  input 		= gin.Context
+ *  output    = JSON with Status code
+ * 						= model.Store JSON
+ *  end of specification;
+**************************************************/
 func (sc StoreController) ShowStore(c *gin.Context) {
 	// headerを取得
 	h := model.AuthorizationHeader{}
@@ -59,9 +82,7 @@ func (sc StoreController) ShowStore(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, err)
 		return
 	}
-	// ペイロード読み出し
-	// claims := token.Claims.(jwt.MapClaims)
-	// user_id := fmt.Sprintf("%s", claims["user"])
+
 	id := c.Params.ByName("id")
 	var s model.Store
 	p, err := s.GetByStoreID(id)

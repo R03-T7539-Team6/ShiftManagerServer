@@ -56,19 +56,19 @@ type ShiftSchedule struct {
 	WorkerNum            uint        `json:"worker_num"`
 }
 
-// ******************Shift
-//GetAllShift is get all shift
-// func (sr Shift) GetAllShift() ([]Shift, error) {
-// 	db := db.GetDB()
-// 	var srr []Shift
-
-// 	if err := db.Find(&srr).Error; err != nil {
-// 		return nil, err
-// 	}
-// 	return srr, nil
-// }
-
-// CreateShift is create a shift
+/*************************************************
+ *	specification;
+ *	name 			= CreateShift
+ *	Function 	= create a shift in shift table
+ *	note			= shift table is related json
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= c: *gin.Context http.request
+ *  output    = Shift: Shift sturct
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (sr Shift) CreateShift(c *gin.Context) (Shift, error) {
 	db := db.GetDB()
 	if err := c.BindJSON(&sr); err != nil {
@@ -81,7 +81,19 @@ func (sr Shift) CreateShift(c *gin.Context) (Shift, error) {
 	return sr, nil
 }
 
-// GetByUserId is get all user shift
+/*************************************************
+ *	specification;
+ *	name 			= GetByUserId
+ *	Function 	= Get shifts in shift table
+ *	note			= shift table is related json
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= user_id: string
+ *  output    = []Shift: Shift sturct array
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (sr Shift) GetByUserId(user_id string) ([]Shift, error) {
 	db := db.GetDB()
 	var srr []Shift
@@ -91,7 +103,21 @@ func (sr Shift) GetByUserId(user_id string) ([]Shift, error) {
 	return srr, nil
 }
 
-// GetByUserIdAndRequest is get all user request shift
+/*************************************************
+ *	specification;
+ *	name 			= GetByUserIdAndIsRequest
+ *	Function 	= Get shifts in shift table
+ *	note			= shift table is related json
+ *            = can get a request shift
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= user_id: string
+ * 						= is_request: bool
+ *  output    = []Shift: Shift sturct array
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (sr Shift) GetByUserIdAndIsRequest(user_id string, is_request bool) ([]Shift, error) {
 	db := db.GetDB()
 	var srr []Shift
@@ -101,7 +127,20 @@ func (sr Shift) GetByUserIdAndIsRequest(user_id string, is_request bool) ([]Shif
 	return srr, nil
 }
 
-// GetByWorkDate is get all work date shift.
+/*************************************************
+ *	specification;
+ *	name 			= GetByWorkDate
+ *	Function 	= Get shifts in shift table
+ *	note			= shift table is related json
+ *            = can get a specific date shift
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= work_date: time.Time UTC value
+ *  output    = []Shift: Shift sturct array
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (sr Shift) GetByWorkDate(work_date time.Time) ([]Shift, error) {
 	db := db.GetDB()
 	var srr []Shift
@@ -111,7 +150,21 @@ func (sr Shift) GetByWorkDate(work_date time.Time) ([]Shift, error) {
 	return srr, nil
 }
 
-// GetByWorkDateAndIsRequest is get all work date request shift.
+/*************************************************
+ *	specification;
+ *	name 			= GetByWorkDateAndIsRequest
+ *	Function 	= get shifts in shift table
+ *	note			= shift table is related json
+ * 						= can get specific workdate, and request shifts
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= work_date: time.Time UTC value
+ * 						= is_request: bool
+ *  output    = []Shift: Shift sturct array
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (sr Shift) GetByWorkDateAndIsRequest(work_date time.Time, is_request bool) ([]Shift, error) {
 	db := db.GetDB()
 	var srr []Shift
@@ -121,7 +174,20 @@ func (sr Shift) GetByWorkDateAndIsRequest(work_date time.Time, is_request bool) 
 	return srr, nil
 }
 
-// GetByIsRequest is get all work date request shift.
+/*************************************************
+ *	specification;
+ *	name 			= GetByIsRequest
+ *	Function 	= get shifts in shift table
+ *	note			= shift table is related json
+ * 						= can get request shifts
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= is_request: bool
+ *  output    = []Shift: Shift sturct array
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (sr Shift) GetByIsRequest(is_request bool) ([]Shift, error) {
 	db := db.GetDB()
 	var srr []Shift
@@ -131,7 +197,21 @@ func (sr Shift) GetByIsRequest(is_request bool) ([]Shift, error) {
 	return srr, nil
 }
 
-// UpdateShift is create a shift
+/*************************************************
+ *	specification;
+ *	name 			= UpdateShift
+ *	Function 	= Update a shift in shift table
+ *	note			= shift table is related json
+ * 						= id is not user_id
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= id: string
+ * 						= c: *gin.Context
+ *  output    = Shift: Shift sturct
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (sr Shift) UpdateShift(id string, c *gin.Context) (Shift, error) {
 	db := db.GetDB()
 	if err := db.Where("id = ?", id).First(&sr).Error; err != nil {
@@ -143,7 +223,19 @@ func (sr Shift) UpdateShift(id string, c *gin.Context) (Shift, error) {
 	return sr, nil
 }
 
-// DeleteById is delete a shift by id
+/*************************************************
+ *	specification;
+ *	name 			= DeleteById
+ *	Function 	= Delete a shift in shift table
+ *	note			= shift table is related json
+ * 						= id is not user_id
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= id: string
+ *  output    = error value
+ *  end of specification;
+**************************************************/
 func (sr Shift) DeleteById(id string) error {
 	db := db.GetDB()
 	if err := db.Where("id = ?", id).Delete(&sr).Error; err != nil {
@@ -152,20 +244,19 @@ func (sr Shift) DeleteById(id string) error {
 	return nil
 }
 
-// ******************Shift
-
-// **************ShiftRequest
-// func (sr ShiftRequest) GetAll() ([]ShiftRequest, error) {
-// 	db := db.GetDB()
-// 	var srr []ShiftRequest
-
-// 	if err := db.Find(&srr).Error; err != nil {
-// 		return nil, err
-// 	}
-// 	return srr, nil
-// }
-
-// CreateShiftRequest is create a shift
+/*************************************************
+ *	specification;
+ *	name 			= CreateShiftRequest
+ *	Function 	= Create a shift request model in shiftRequest table
+ *	note			= shiftRequest table is related json
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= c: *gin.Context
+ *  output    = ShiftRequest: ShiftRequest value
+ * 						= error: error value
+ *  end of specification;
+**************************************************/
 func (sr ShiftRequest) CreateShiftRequest(c *gin.Context) (ShiftRequest, error) {
 	db := db.GetDB()
 	if err := c.BindJSON(&sr); err != nil {
@@ -178,8 +269,19 @@ func (sr ShiftRequest) CreateShiftRequest(c *gin.Context) (ShiftRequest, error) 
 	return sr, nil
 }
 
-// GetByUserId is get user request shift
-// Simillar to Shift method (GetByUserIdAndIsRequest)
+/*************************************************
+ *	specification;
+ *	name 			= GetByUserId
+ *	Function 	= get a shift request model in shiftRequest table by user_id
+ *	note			= shiftRequest table is related json
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= user_id: string
+ *  output    = ShiftRequest: ShiftRequest value
+ * 						= error: error value
+ *  end of specification;
+**************************************************/
 func (sr ShiftRequest) GetByUserId(user_id string) (ShiftRequest, error) {
 	db := db.GetDB()
 
@@ -199,7 +301,19 @@ func (sr ShiftRequest) GetByUserId(user_id string) (ShiftRequest, error) {
 	return srr, nil
 }
 
-// DeleteById is delete a shift request related user by id
+/*************************************************
+ *	specification;
+ *	name 			= DeleteById
+ *	Function 	= delete a shift request model in shiftRequest table by shift id
+ *	note			= shiftRequest table is related json
+ * 						= id is not user id
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= user_id: string
+ *  output    = id: string
+ *  end of specification;
+**************************************************/
 func (sr ShiftRequest) DeleteById(id string) error {
 	db := db.GetDB()
 	if err := db.Where("id = ?", id).Delete(&sr).Error; err != nil {
@@ -208,11 +322,19 @@ func (sr ShiftRequest) DeleteById(id string) error {
 	return nil
 }
 
-// ****************ShfitRequest
-
-// **************ShiftSchedule
-
-// CreateShiftSchedule is a shift schedule
+/*************************************************
+ *	specification;
+ *	name 			= CreateShiftSchedule
+ *	Function 	= Create a shift schedule model in shiftSchedule table
+ *	note			= shiftSchedule table is related json
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= c: *gin.Context http.Request
+ *  output    = ShiftSchedule: ShiftSchedule struct
+ * 						= error: error value
+ *  end of specification;
+**************************************************/
 func (ss ShiftSchedule) CreateShiftSchedule(c *gin.Context) (ShiftSchedule, error) {
 	db := db.GetDB()
 	if err := c.BindJSON(&ss); err != nil {
@@ -225,7 +347,19 @@ func (ss ShiftSchedule) CreateShiftSchedule(c *gin.Context) (ShiftSchedule, erro
 	return ss, nil
 }
 
-// GetById is get a shift schedule by id
+/*************************************************
+ *	specification;
+ *	name 			= GetByStoreId
+ *	Function 	= Get a shift schedule model in shiftSchedule table by store Id
+ *	note			= shiftSchedule table is related json
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= store_id: string
+ *  output    = ShiftSchedule: ShiftSchedule struct
+ * 						= error: error value
+ *  end of specification;
+**************************************************/
 func (ss ShiftSchedule) GetByStoreId(store_id string) (ShiftSchedule, error) {
 	db := db.GetDB()
 	var s []Shift
@@ -238,5 +372,3 @@ func (ss ShiftSchedule) GetByStoreId(store_id string) (ShiftSchedule, error) {
 	}
 	return ss, nil
 }
-
-// ***************ShiftSchedule

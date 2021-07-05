@@ -14,7 +14,19 @@ type Store struct {
 	ShiftSchedule []ShiftSchedule `json:"shift_schedules"`
 }
 
-// CreateStore is create a store with store ID
+/*************************************************
+ *	specification;
+ *	name 			= CreateStore
+ *	Function 	= create store model in Store table
+ *	note			= store table is related json
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= c: *gin.Context http.request
+ *  output    = Store: Store sturct
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (s Store) CreateStore(c *gin.Context) (Store, error) {
 	db := db.GetDB()
 
@@ -27,7 +39,20 @@ func (s Store) CreateStore(c *gin.Context) (Store, error) {
 	return s, nil
 }
 
-// GetByStoreID is get a store by store id
+/*************************************************
+ *	specification;
+ *	name 			= GetByStoreID
+ *	Function 	= Get a Store in store talbe with store id
+ *	note			= store table is related json
+ *						= get a user, request, schedule by store_id
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= c: *gin.Context http.request
+ *  output    = Store: Store sturct
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (s Store) GetByStoreID(store_id string) (Store, error) {
 	db := db.GetDB()
 	var u []User

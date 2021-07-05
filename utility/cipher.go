@@ -8,10 +8,20 @@ import (
 	"encoding/hex"
 )
 
-// ハッシュ化関数
-// md5, sha1, sha256, sha512に対応
-// デフォルトはsha256
-
+/*************************************************
+ *	specification;
+ *	name 			= HashStr
+ *	Function 	= generate Hash used specific hash func
+ *	note			= umd5, sha1, sha256, sha512
+ *						= default is sha256
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= trg string  string value
+ * 						= alg string: Hash function
+ *  output    = hashed string: string
+ *  end of specification;
+**************************************************/
 func HashStr(trg, alg string) string {
 	hashed := ""
 	b := []byte(trg)
