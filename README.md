@@ -3,14 +3,13 @@
 
 シフト管理ツールのAPI
 
-APIのドキュメントは`HackMD`に書いたのでの参照してください（未完成）</br>
+APIのドキュメントは`HackMD`に書いたのでの参照してください</br>
 [ShiftManager API ドキュメント](https://hackmd.io/@R1zb_r8nS2SNRHkRjV6SoA/SJ0ZtA23O)
 
 ## ディレクトリ構成について
-- service : modelの動作を実装
 - server : ginの設定（ルーティングなど）
-- controller : アクションを定義しserviceを呼び出す
-- entity : modelのstructを分離す）
+- controller : アクションを定義する。Serverでhttpハンドラとして呼び出す
+- model: モデルの定義及びモデルの操作をそれぞれ記述する 
 - db : データベース設定
 - vendor : Goで用いるパッケージなど
 

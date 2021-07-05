@@ -67,19 +67,20 @@ type User struct {
 	UserGroup group  `json:"user_group"`
 }
 
-//*************** User Method ***********************
-// GetAll is get all User
-// func (s User) GetAll() ([]User, error) {
-// 	db := db.GetDB()
-// 	var u []User
-
-// 	if err := db.Find(&u).Error; err != nil {
-// 		return nil, err
-// 	}
-// 	return u, nil
-// }
-
-// CreateModel is create User model
+/*************************************************
+ *	specification;
+ *	name 			= CreateModel
+ *	Function 	= create User model in user table
+ *	note			= user table is related json
+ *						= make password hashed
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= c: *gin.Context http.request
+ *  output    = User: User sturct
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (s User) CreateModel(c *gin.Context) (User, error) {
 	db := db.GetDB()
 	var u User
@@ -98,7 +99,20 @@ func (s User) CreateModel(c *gin.Context) (User, error) {
 	return u, nil
 }
 
-// GetByID is get a User
+/*************************************************
+ *	specification;
+ *	name 			= GetByID
+ *	Function 	= get a User model in user table
+ *	note			= user table is related json
+ *						= searching by user_id
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= id: string, this is user_id
+ *  output    = User: User sturct
+ * 						= error value
+ *  end of specification;
+**************************************************/
 func (s User) GetByID(id string) (User, error) {
 	db := db.GetDB()
 	var u User
@@ -108,23 +122,81 @@ func (s User) GetByID(id string) (User, error) {
 	return u, nil
 }
 
-// UpdateByID is update a User
-func (s User) UpdateByID(id string, c *gin.Context) (User, error) {
+/*************************************************
+ *	specification;
+ *	name 			= GetByIDWithPassword
+ *	Function 	= get a User model in user table with password
+ *	note			= user table is related json
+ *						= searching by user_id
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= id: string, this is user_id
+ *  output    = User: User sturct
+ * 						= error value
+ *  end of specification;
+**************************************************/
+func (s User) GetByIDWithPassword(id string) (User, error) {
 	db := db.GetDB()
 	var u User
 	if err := db.Where("user_id = ?", id).First(&u).Error; err != nil {
 		return u, err
 	}
+	return u, nil
+}
+
+/*************************************************
+ *	specification;
+ *	name 			= UpdateByID
+ *	Function 	= Update a User model in user table
+ *	note			= user table is related json
+ *						= searching by user_id
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= id: string, this is user_id
+ * 						= c: *gin.Context http.request
+ *  output    = User: User sturct
+ * 						= error value
+ *  end of specification;
+**************************************************/
+func (s User) UpdateByID(id string, c *gin.Context) (User, error) {
+	db := db.GetDB()
+	var u User
+
+	if err := db.Where("user_id = ?", id).First(&u).Error; err != nil {
+		return u, err
+	}
+
 	if err := c.BindJSON(&u); err != nil {
 		return u, err
 	}
-	u.Password = utility.HashStr(u.Password, "sha256")
+
+	// パスワードの更新なのかを確かめる
+	var has_password map[string]interface{}
+	c.BindJSON(&has_password)
+	if _, ok := has_password["password"]; ok {
+		u.Password = utility.HashStr(u.Password, "sha256")
+	}
+
 	db.Save(&u)
 
 	return u, nil
 }
 
-// DeleteByID is delete a User
+/*************************************************
+ *	specification;
+ *	name 			= DeleteByID
+ *	Function 	= delete a User model in user table
+ *	note			= user table is related json
+ *						= searching by user_id
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= id: string, this is user_id
+ *  output    = error value
+ *  end of specification;
+**************************************************/
 func (s User) DeleteByID(id string) error {
 	db := db.GetDB()
 	var u User
@@ -134,5 +206,3 @@ func (s User) DeleteByID(id string) error {
 	}
 	return nil
 }
-
-//*************** User Method ***********************

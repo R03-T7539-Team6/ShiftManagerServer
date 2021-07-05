@@ -10,22 +10,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// UserController is User UserController
 type UserController struct{}
 
-// Index action: GET /Users
-// func (pc UserController) Index(c *gin.Context) {
-// 	var u model.User
-// 	p, err := u.GetAll()
-// 	if err != nil {
-// 		c.AbortWithStatus(404)
-// 		fmt.Println(err)
-// 	} else {
-// 		c.JSON(200, p)
-// 	}
-// }
-
-// Create action: POST /Users
+/*************************************************
+ *	specification;
+ *	name 			= Create
+ *	Function 	= Create a User
+ *	note			= POST /Users
+ *						= to create user need to jwt token
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10/V1.11/V1.20
+ *  input 		= gin.Context
+ *  output    = JSON with status code
+ * 						= model.User JSON without password
+ *  end of specification;
+**************************************************/
 func (pc UserController) Create(c *gin.Context) {
 	// headerを取得
 	h := model.AuthorizationHeader{}
@@ -42,22 +42,33 @@ func (pc UserController) Create(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, err)
 		return
 	}
-	// ペイロード読み出し
-	// claims := token.Claims.(jwt.MapClaims)
-	// user_id := fmt.Sprintf("%s", claims["user"])
 
 	var u model.User
 	p, err := u.CreateModel(c)
-
 	if err != nil {
 		c.AbortWithStatus(400)
 		fmt.Println(err)
 	} else {
+		p.Password = ""
 		c.JSON(200, p)
 	}
 }
 
-// Show action: GET /Users
+/*************************************************
+ *	specification;
+ *	name 			= Show
+ *	Function 	= Get self User info
+ *	note			= GET /Users
+ *						= to get user need to jwt token
+ *						= can not get other user info
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10/V1.11/V1.20
+ *  input 		= gin.Context
+ *  output    = JSON with status code
+ * 						= model.User JSON without password
+ *  end of specification;
+**************************************************/
 func (pc UserController) Show(c *gin.Context) {
 	// headerを取得
 	h := model.AuthorizationHeader{}
@@ -81,16 +92,30 @@ func (pc UserController) Show(c *gin.Context) {
 	// id := c.Params.ByName("id")
 	var u model.User
 	p, err := u.GetByID(user_id)
-
 	if err != nil {
 		c.AbortWithStatus(404)
 		fmt.Println(err)
 	} else {
+		p.Password = ""
 		c.JSON(200, p)
 	}
 }
 
-// Update action: PUT /Users
+/*************************************************
+ *	specification;
+ *	name 			= Update
+ *	Function 	= Update self User info
+ *	note			= PUT /Users
+ *						= to put user need to jwt token
+ *						= can not change other user
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10/V1.11/V1.20
+ *  input 		= gin.Context
+ *  output    = JSON with status code
+ * 						= model.User JSON without password
+ *  end of specification;
+**************************************************/
 func (pc UserController) Update(c *gin.Context) {
 	// headerを取得
 	h := model.AuthorizationHeader{}
@@ -117,11 +142,26 @@ func (pc UserController) Update(c *gin.Context) {
 		c.AbortWithStatus(400)
 		fmt.Println(err)
 	} else {
+		p.Password = ""
 		c.JSON(200, p)
 	}
 }
 
-// Delete action: DELETE /Users
+/*************************************************
+ *	specification;
+ *	name 			= Delete
+ *	Function 	= Delete self User info
+ *	note			= DELETE /Users
+ *						= to delete user need to jwt token
+ *						= when delete self, expire token
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10/V1.11/V1.20
+ *  input 		= gin.Context
+ *  output    = JSON with status code
+ * 						= deleted userid JSON
+ *  end of specification;
+**************************************************/
 func (pc UserController) Delete(c *gin.Context) {
 	// headerを取得
 	h := model.AuthorizationHeader{}

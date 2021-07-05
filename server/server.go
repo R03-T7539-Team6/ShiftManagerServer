@@ -13,6 +13,18 @@ func Init() {
 	r.Run()
 }
 
+/*************************************************
+ *	specification;
+ *	name 			= router
+ *	Function 	= define routing endpoint
+ *	note			= use Init function
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= None
+ *  output    = *gin.Engine
+ *  end of specification;
+**************************************************/
 func router() *gin.Engine {
 	r := gin.Default()
 
@@ -41,14 +53,12 @@ func router() *gin.Engine {
 	{
 		ctrl := controller.ShiftController{}
 		// Shift
-		// s.GET("", ctrl.IndexShift)
 		s.POST("", ctrl.CreateShift)
-		// s.GET("", ctrl.ShowShift)
 		s.GET("", ctrl.ShowShiftByUser)
+		s.PUT("/:id", ctrl.UpdateShift)
 		s.DELETE("/:id", ctrl.DeleteShift)
 
 		// Shift Request
-		// s.GET("/requests", ctrl.IndexRequest)
 		s.POST("/requests", ctrl.CreateRequest)
 		s.GET("/requests", ctrl.ShowRequest)
 		s.DELETE("/requests/:id", ctrl.DeleteRequest)
