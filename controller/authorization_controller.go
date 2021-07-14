@@ -85,13 +85,17 @@ func (ac AuthorizationController) Login(c *gin.Context) {
 	log.Println("login success: user id = ", user_in_database.UserID)
 
 	token, err := CreateToken(user_in_database.UserID)
+	p, _ := u.GetByID(user_in_database.UserID)
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, err.Error())
 		return
+	} else {
+		p.Password = ""
+		c.JSON(http.StatusOK, &model.LoginResponse{
+			Token: token,
+			User:  p,
+		})
 	}
-	c.JSON(http.StatusOK, &model.LoginResponse{
-		Token: token,
-	})
 }
 
 /*************************************************
