@@ -9,6 +9,7 @@ type Authorization struct {
 // for Response jwt token
 type LoginResponse struct {
 	Token string `json:"token"`
+	User  User   `json:"user" gorm:"foreignKey:UserID"`
 }
 
 // for get Authorization header token
