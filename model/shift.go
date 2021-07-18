@@ -129,7 +129,7 @@ func (sr Shift) GetByUserIdAndIsRequest(user_id string, is_request bool) ([]Shif
 
 /*************************************************
  *	specification;
- *	name 			= GetByWorkDate
+ *	name 			= GetByUserIDandWorkDate
  *	Function 	= Get shifts in shift table
  *	note			= shift table is related json
  *            = can get a specific date shift
@@ -141,10 +141,10 @@ func (sr Shift) GetByUserIdAndIsRequest(user_id string, is_request bool) ([]Shif
  * 						= error value
  *  end of specification;
 **************************************************/
-func (sr Shift) GetByWorkDate(work_date time.Time) ([]Shift, error) {
+func (sr Shift) GetByUserIDandWorkDate(user_id string, work_date string) ([]Shift, error) {
 	db := db.GetDB()
 	var srr []Shift
-	if err := db.Where("work_date = ?", work_date).Find(&srr).Error; err != nil {
+	if err := db.Where("user_id = ? AND work_date = ?", user_id, work_date).Find(&srr).Error; err != nil {
 		return srr, err
 	}
 	return srr, nil
@@ -165,7 +165,7 @@ func (sr Shift) GetByWorkDate(work_date time.Time) ([]Shift, error) {
  * 						= error value
  *  end of specification;
 **************************************************/
-func (sr Shift) GetByWorkDateAndIsRequest(work_date time.Time, is_request bool) ([]Shift, error) {
+func (sr Shift) GetByWorkDateAndIsRequest(work_date string, is_request bool) ([]Shift, error) {
 	db := db.GetDB()
 	var srr []Shift
 	if err := db.Where("work_date = ? AND is_request = ?", work_date, is_request).Find(&srr).Error; err != nil {
@@ -370,5 +370,35 @@ func (ss ShiftSchedule) GetByStoreId(store_id string) (ShiftSchedule, error) {
 	if err := db.Where("store_id = ? AND is_request = false", store_id).Find(&s).Error; err != nil {
 		return ss, err
 	}
+
+	ss.Shift = s
+	return ss, nil
+}
+
+/*************************************************
+ *	specification;
+ *	name 			= GetByStoreIdAndTargetDate
+ *	Function 	= Get a shift schedule model in shiftSchedule table by store Id
+ *	note			= shiftSchedule table is related json
+ *	date			= 07/05/2021
+ *  author		= Yuma Matsuzaki
+ *  History		= V1.00/V1.10
+ *  input 		= store_id: string
+ *  output    = ShiftSchedule: ShiftSchedule struct
+ * 						= error: error value
+ *  end of specification;
+**************************************************/
+func (ss ShiftSchedule) GetByStoreIdAndTargetDate(store_id string, target_date string) (ShiftSchedule, error) {
+	db := db.GetDB()
+	var s []Shift
+	if err := db.Where("store_id = ? AND target_date = ?", store_id, target_date).Find(&ss).Error; err != nil {
+		return ss, err
+	}
+
+	if err := db.Where("store_id = ? AND target_date = ? AND is_request = false", store_id, target_date).Find(&s).Error; err != nil {
+		return ss, err
+	}
+
+	ss.Shift = s
 	return ss, nil
 }

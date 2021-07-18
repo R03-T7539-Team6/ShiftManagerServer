@@ -173,15 +173,15 @@ func (pc UserController) Delete(c *gin.Context) {
 	tokenString = strings.TrimPrefix(tokenString, "Bearer ")
 
 	// tokenの認証
-	token, err := Verifytoken(tokenString)
+	_, err := Verifytoken(tokenString)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, err)
 		return
 	}
 	// ペイロード読み出し
-	claims := token.Claims.(jwt.MapClaims)
-	user_id := fmt.Sprintf("%s", claims["user"])
-	// id := c.Params.ByName("id")
+	// claims := token.Claims.(jwt.MapClaims)
+	// user_id := fmt.Sprintf("%s", claims["user"])
+	user_id := c.Params.ByName("id")
 	var u model.User
 
 	if err := u.DeleteByID(user_id); err != nil {

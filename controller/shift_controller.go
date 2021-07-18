@@ -89,14 +89,22 @@ func (sc ShiftController) ShowShiftByUser(c *gin.Context) {
 	var sr model.Shift
 	// id := c.Params.ByName("id")
 	is_request := c.Query("is_request")
+	work_date := c.Query("target_date")
 
 	var p []model.Shift
-	if is_request != "" {
+	if work_date == "" && is_request != "" {
 		is_request_parse, _ := strconv.ParseBool(is_request)
 		p, err = sr.GetByUserIdAndIsRequest(user_id, is_request_parse)
+	} else if work_date != "" && is_request == "" {
+		// work_date_parse, _ := time.Parse("yyyy-mm-ddT00-00-00Z", work_date)
+		p, err = sr.GetByUserIDandWorkDate(user_id, work_date)
+	} else if work_date != "" && is_request != "" {
+		is_request_parse, _ := strconv.ParseBool(is_request)
+		p, err = sr.GetByWorkDateAndIsRequest(work_date, is_request_parse)
 	} else {
 		p, err = sr.GetByUserId(user_id)
 	}
+
 	if err != nil {
 		c.AbortWithStatus(404)
 		fmt.Println(err)
@@ -385,8 +393,16 @@ func (sc ShiftController) ShowSchedule(c *gin.Context) {
 	}
 	// ペイロード読み出し
 	id := c.Params.ByName("id")
+	work_date := c.Query("target_date")
+
 	var ss model.ShiftSchedule
-	p, err := ss.GetByStoreId(id)
+	var p model.ShiftSchedule
+	if work_date != "" {
+		p, err = ss.GetByStoreIdAndTargetDate(id, work_date)
+	} else {
+		p, err = ss.GetByStoreId(id)
+	}
+
 	if err != nil {
 		c.AbortWithStatus(404)
 		fmt.Println(err)
