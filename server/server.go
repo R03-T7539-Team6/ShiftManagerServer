@@ -46,7 +46,7 @@ func router() *gin.Engine {
 		u.GET("", ctrl.Show)
 		u.POST("", ctrl.Create)
 		u.PUT("", ctrl.Update)
-		u.DELETE("", ctrl.Delete)
+		u.DELETE("/:id", ctrl.Delete)
 	}
 
 	s := r.Group("/shifts")
